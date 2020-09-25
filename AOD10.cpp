@@ -21,13 +21,13 @@ public:
     leaf* getLeft() { return this->left; }
     leaf* getRight() { return this->right; }
 
-    void addLeaf(leaf* node){
+    void addLeaf(leaf* node) {
         if (this->number >= node->getNumber()) {
             if (this->left == NULL) { this->left = node; this->left->setParent(this); }
-            else this->left->addLeaf(node); 
+            else this->left->addLeaf(node);
         }
         else {
-            if (this->right == NULL) { this->right = node; this->right->setParent(this);}
+            if (this->right == NULL) { this->right = node; this->right->setParent(this); }
             else this->right->addLeaf(node);
         }
     }
@@ -44,11 +44,11 @@ public:
             buffer->getLeft()->setParent(buffer->getParent());
             if (buffer->getParent()->getLeft() == buffer) buffer->getParent()->setLeft(buffer->getLeft());
             else buffer->getParent()->setRight(buffer->getLeft());
-            if (buffer->getRight()!=NULL) buffer->getLeft()->addLeaf(buffer->getRight());
+            if (buffer->getRight() != NULL) buffer->getLeft()->addLeaf(buffer->getRight());
             delete buffer;
         }
-        else if(buffer->getRight() != NULL){
-            buffer->getRight()->setParent(buffer->getParent()); 
+        else if (buffer->getRight() != NULL) {
+            buffer->getRight()->setParent(buffer->getParent());
             if (buffer->getParent()->getLeft() == buffer) buffer->getParent()->setLeft(buffer->getRight());
             else buffer->getParent()->setRight(buffer->getRight());
             delete buffer;
@@ -67,9 +67,9 @@ public:
 
 
 int main() {
-    int mass[12] = {8, 6, 10, 4, 7, 9, 15, 2, 5, 14, 16, 3};
+    int mass[12] = { 8, 6, 10, 4, 7, 9, 15, 2, 5, 14, 16, 3 };
     leaf* root = new leaf(mass[0]);
-    
+
     for (int i = 1; i < 12; i++) {
         leaf* node = new leaf(mass[i]);
         root->addLeaf(node);
@@ -79,7 +79,9 @@ int main() {
 
     leaf* check = root->findLeaf(14);
 
-    root->deleteLeaf(4);
+    root->deleteLeaf(4); cout << endl;
 
-    int a = 6;
+    root->printSort();
+
+    cout << endl << "The end";
 }
