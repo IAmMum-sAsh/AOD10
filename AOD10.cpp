@@ -7,15 +7,20 @@ private:
     leaf* left = NULL;
     leaf* right = NULL;
     int number;
+
 public:
     leaf(int number) { this->number = number; }
+
     int getNumber() { return this->number; }
+
     void setParent(leaf* parent) { this->parent = parent; }
-    leaf* getParent() { return this->parent; }
     void setLeft(leaf* left) { this->left = left; }
-    leaf* getLeft() { return this->left; }
     void setRight(leaf* right) { this->right = right; }
+
+    leaf* getParent() { return this->parent; }
+    leaf* getLeft() { return this->left; }
     leaf* getRight() { return this->right; }
+
     void addLeaf(leaf* node){
         if (this->number >= node->getNumber()) {
             if (this->left == NULL) { this->left = node; this->left->setParent(this); }
@@ -26,11 +31,13 @@ public:
             else this->right->addLeaf(node);
         }
     }
+
     leaf* findLeaf(int number) {
         if (this->number == number) return this;
         else if (this->number <= number) this->right->findLeaf(number);
         else this->left->findLeaf(number);
     }
+
     void deleteLeaf(int number) {
         leaf* buffer = findLeaf(number);
         if (buffer->getLeft() != NULL) {
@@ -47,18 +54,32 @@ public:
             delete buffer;
         }
     }
+
+    void printSort() {
+        if (this != NULL) {
+            this->getLeft()->printSort();
+            cout << this->number << " ";
+            this->getRight()->printSort();
+        }
+    }
 };
 
 
 
 int main() {
-    leaf* root = new leaf(8);
-    int mass[11] = {6, 10, 4, 7, 9, 15, 2, 5, 14, 16, 3};
-    for (int i = 0; i < 11; i++) {
+    int mass[12] = {8, 6, 10, 4, 7, 9, 15, 2, 5, 14, 16, 3};
+    leaf* root = new leaf(mass[0]);
+    
+    for (int i = 1; i < 12; i++) {
         leaf* node = new leaf(mass[i]);
         root->addLeaf(node);
     }
+
+    root->printSort();
+
     leaf* check = root->findLeaf(14);
+
     root->deleteLeaf(4);
+
     int a = 6;
 }
